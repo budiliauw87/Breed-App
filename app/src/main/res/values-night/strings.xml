@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_logo">Image logo</string>
+    <string name="app_subtitle">The list of cat breeds</string>
+    <string name="version_app">Version 1.0</string>
+    <string name="something_error">Something Error !!</string>
+    <string name="reload">Reload</string>
+    <string name="thumbnail">thumbnail</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="search_breed">Search Breed</string>
+    <string name="retry">Retry</string>
+    <string name="expand_collapse">expand collapse</string>
+    <string name="descreption">Descreption</string>
+</resources>
