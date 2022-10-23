@@ -11,4 +11,12 @@
     <string name="retry">Retry</string>
     <string name="expand_collapse">expand collapse</string>
     <string name="descreption">Descreption</string>
+    <string name="wikipedia">Wikipedia</string>
+    <string name="origin">Origin</string>
+    <string name="life_span">Life span</string>
+    <string name="adaptability">Adaptability</string>
+    <string name="affection">Affection</string>
+    <string name="energy">Energy</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="health_issue">Health issue</string>
 </resources>

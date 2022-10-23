@@ -1,14 +1,11 @@
 package com.liaudev.catbreedsapp.data;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.Pager;
 import androidx.paging.PagingConfig;
 
 import com.android.volley.Request;
-import com.android.volley.VolleyError;
 import com.liaudev.catbreedsapp.data.response.BreedItem;
 import com.liaudev.catbreedsapp.network.ApiRequest;
 import com.liaudev.catbreedsapp.network.CustomRequest;

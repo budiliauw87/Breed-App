@@ -42,4 +42,5 @@ public class MainViewModel extends ViewModel {
         final String querySearch = query == null ? "" : query;
         queryLiveData.setValue(querySearch);
     }
+
 }

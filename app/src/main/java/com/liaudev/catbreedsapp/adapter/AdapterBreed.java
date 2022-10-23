@@ -67,8 +67,16 @@ public class AdapterBreed extends PagingDataAdapter<BreedItem, AdapterBreed.Item
                         .asDrawable().sizeMultiplier(0.25f);
                 options.placeholder(R.drawable.ic_launcher_foreground);
                 options.centerCrop();
+                String urlImage;
+                if(breedItem.getImage() !=null){
+                    urlImage = breedItem.getImage();
+                }else if(breedItem.getReferenceImage()!=null){
+                    urlImage = "https://cdn2.thecatapi.com/images/"+breedItem.getReferenceImage()+".jpg";
+                }else{
+                    urlImage = "";
+                }
                 Glide.with(itemView.getContext())
-                        .load(breedItem.getImage()) // Load the image
+                        .load(urlImage) // Load the image
                         .thumbnail(requestBuilder)
                         .apply(options)
                         .into(itemBreedBinding.thumbnail);

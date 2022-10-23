@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.LoadState;
+import androidx.paging.PagingData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.liaudev.catbreedsapp.App;
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 hideAllLayout();
+                adapterBreed.submitData(getLifecycle(), PagingData.empty());
                 viewModel.findBreeds(queryBreed);
                 adapterBreed.refresh();
                 return false;
@@ -58,6 +60,7 @@ public class MainActivity extends BaseActivity {
         setImageTheme();
         binding.swipeRefresh.setRefreshing(true);
         binding.btnRefresh.setOnClickListener((v)->{
+            adapterBreed.submitData(getLifecycle(), PagingData.empty());
             hideAllLayout();
             adapterBreed.refresh();
         });

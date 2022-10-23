@@ -1,7 +1,5 @@
 package com.liaudev.catbreedsapp.data;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.paging.PagingState;
@@ -79,7 +77,6 @@ public class BreedPagingSource extends RxPagingSource<Integer, BreedItem> {
                 }else{
                     urlFetchBreed+="?limit=10&page="+page;
                 }
-                Log.e("PagingSource",urlFetchBreed);
                 api.addToRequestQueue(new CustomRequest(Request.Method.GET, urlFetchBreed,
                         null, response -> {
                     List<BreedItem> breedItemList = new ArrayList<>();
@@ -92,9 +89,19 @@ public class BreedPagingSource extends RxPagingSource<Integer, BreedItem> {
                             item.setTemperament(responseObj.getString("temperament"));
                             item.setDescription(responseObj.getString("description"));
                             item.setOrigin(responseObj.getString("origin"));
+                            item.setLifeSpan(responseObj.getString("life_span"));
+                            item.setAdaptability(responseObj.getInt("adaptability"));
+                            item.setAffectionLevel(responseObj.getInt("affection_level"));
+                            item.setEnergyLevel(responseObj.getInt("energy_level"));
+                            item.setIntelligence(responseObj.getInt("intelligence"));
+                            item.setHealthIssues(responseObj.getInt("health_issues"));
+                            item.setWikipediaUrl(responseObj.getString("wikipedia_url"));
                             if(responseObj.has("image")){
                                 JSONObject imageObj = responseObj.getJSONObject("image");
                                 item.setImage(imageObj.getString("url"));
+                            }
+                            if(responseObj.has("reference_image_id")){
+                                item.setReferenceImage(responseObj.getString("reference_image_id"));
                             }
                             breedItemList.add(item);
                         } catch (JSONException e) {

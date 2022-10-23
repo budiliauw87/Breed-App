@@ -7,8 +7,6 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.liaudev.catbreedsapp.R;
-
 /**
  * Created by Budiliauw87 on 2022-10-22.
  * budiliauw87.github.io

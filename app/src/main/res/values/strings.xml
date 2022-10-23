@@ -11,4 +11,15 @@
     <string name="retry">Retry</string>
     <string name="expand_collapse">expand collapse</string>
     <string name="descreption">Descreption</string>
+
+    <string name="dummy" translatable="false">The York Chocolate cat was a friendly breed,happy to spend time with its people and fond of cuddling. These kitties were described as being playful,energetic, and intelligent, with a curious streak and an appreciation for being part of daily life.Mice didnt stand a chance in homes where yourChocolate cats were present as these beautiful felines also happened to be excellent hunters.
+    </string>
+    <string name="wikipedia">Wikipedia</string>
+    <string name="origin">Origin</string>
+    <string name="life_span">Life span</string>
+    <string name="adaptability">Adaptability</string>
+    <string name="affection">Affection</string>
+    <string name="energy">Energy</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="health_issue">Health issue</string>
 </resources>

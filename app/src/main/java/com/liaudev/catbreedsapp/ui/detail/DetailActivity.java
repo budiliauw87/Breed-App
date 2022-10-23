@@ -1,35 +1,30 @@
 package com.liaudev.catbreedsapp.ui.detail;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.liaudev.catbreedsapp.App;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.shape.ShapeAppearanceModel;
 import com.liaudev.catbreedsapp.R;
 import com.liaudev.catbreedsapp.data.response.BreedItem;
 import com.liaudev.catbreedsapp.databinding.ActivityDetailBinding;
 import com.liaudev.catbreedsapp.di.ViewModelFactory;
 import com.liaudev.catbreedsapp.ui.BaseActivity;
-import com.liaudev.catbreedsapp.ui.banner.BannerData;
 import com.liaudev.catbreedsapp.ui.banner.DetailBannerAdapter;
-import com.liaudev.catbreedsapp.ui.main.MainActivity;
-import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.zhpan.bannerview.BannerViewPager;
-import com.zhpan.bannerview.BaseViewHolder;
 import com.zhpan.bannerview.constants.IndicatorGravity;
 import com.zhpan.indicator.enums.IndicatorSlideMode;
 import com.zhpan.indicator.enums.IndicatorStyle;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Budiliauw87 on 2022-10-23.
@@ -39,6 +34,8 @@ import java.util.Map;
 public class DetailActivity extends BaseActivity {
     private ActivityDetailBinding binding;
     private DetailBannerAdapter bannerAdapter;
+    private boolean isExpand = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,15 +45,67 @@ public class DetailActivity extends BaseActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         ViewModelFactory factory = ViewModelFactory.getInstance(this);
         DetailViewModel viewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) factory).get(DetailViewModel.class);
         BreedItem breedItem = getIntent().getParcelableExtra("breedObj");
-        if(breedItem!=null){
-            binding.tvName.setText(breedItem.getName());
-            binding.tvOrigin.setText(breedItem.getOrigin());
-            // getting reference of  ExpandableTextView
-            ExpandableTextView expTv = (ExpandableTextView) findViewById(R.id.expand_text_view).findViewById(R.id.expand_text_view);
-            expTv.setText(breedItem.getDescription());
+        if (breedItem != null) {
+            binding.content.tvName.setText(breedItem.getName());
+            binding.content.tvOrigin.setText(breedItem.getOrigin());
+            binding.content.tvAltName.setText(breedItem.getId());
+            binding.content.tvTitleDes.setText(breedItem.getDescription());
+            binding.content.tvLifeSpan.setText(breedItem.getLifeSpan());
+            if(breedItem.getAdaptability()!=0){
+                binding.content.ratingAdaptability.setRating(breedItem.getAdaptability());
+            }
+            if(breedItem.getAffectionLevel()!=0){
+                binding.content.ratingAffection.setRating(breedItem.getAffectionLevel());
+            }
+            if(breedItem.getEnergyLevel()!=0){
+                binding.content.ratingEnergy.setRating(breedItem.getEnergyLevel());
+            }
+            if(breedItem.getIntelligence()!=0){
+                binding.content.ratingIntelligence.setRating(breedItem.getIntelligence());
+            }
+            if(breedItem.getHealthIssues()!=0){
+                binding.content.ratingHealth.setRating(breedItem.getHealthIssues());
+            }
+
+            if (breedItem.getTemperament() != null && !breedItem.getTemperament().isEmpty()) {
+                String[] arrTemprament = breedItem.getTemperament().split(",");
+                ShapeAppearanceModel shapeAppearanceModel = new ShapeAppearanceModel();
+                shapeAppearanceModel.toBuilder().build();
+
+                for (int i = 0; i < arrTemprament.length; i++) {
+                    Chip chip = new Chip(this);
+                    chip.setId(i);
+                    chip.setText(arrTemprament[i]);
+                    chip.setClickable(false);
+                    chip.setShapeAppearanceModel(shapeAppearanceModel);
+                    binding.content.chipGroup.addView(chip);
+                }
+            }
+            binding.content.toggleExpandTitle.setOnClickListener((v) -> {
+                if (isExpand) {
+                    createRotateAnimator(v, 180f, 0f).start();
+                    binding.content.layoutDetail.setVisibility(View.GONE);
+                    isExpand = false;
+                } else {
+                    createRotateAnimator(v, 0f, 180f).start();
+                    binding.content.layoutDetail.setVisibility(View.VISIBLE);
+                    isExpand = true;
+                }
+            });
+
+            //open url wiki
+            binding.content.btnWiki.setOnClickListener((v)->{
+                try {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(breedItem.getWikipediaUrl()));
+                    startActivity(browserIntent);
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), getString(R.string.something_error), Toast.LENGTH_SHORT).show();
+                }
+            });
 
             bannerAdapter = new DetailBannerAdapter();
             binding.bannerView
@@ -85,17 +134,14 @@ public class DetailActivity extends BaseActivity {
                         }
                     }).create();
 
-            viewModel.getListImage(breedItem.getId()).observe(this,banners -> {
+            viewModel.getListImage(breedItem.getId()).observe(this, banners -> {
                 switch (banners.status) {
                     case ERROR:
-                        Log.e("Detail","ERROR");
                         Toast.makeText(getApplicationContext(), banners.message, Toast.LENGTH_SHORT).show();
                         break;
                     case LOADING:
-                        Log.e("Detail","LOADING");
                         break;
                     case SUCCESS:
-                        Log.e("Detail","SUCCESS");
                         if (banners.data != null) {
                             binding.bannerView.refreshData(banners.data);
                         }
@@ -103,8 +149,14 @@ public class DetailActivity extends BaseActivity {
                 }
             });
         }
+    }
 
-
+    //animation rotate vector
+    private ObjectAnimator createRotateAnimator(final View target, final float from, final float to) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(target, "rotation", from, to);
+        animator.setDuration(300);
+        animator.setInterpolator(new LinearInterpolator());
+        return animator;
     }
 
     @Override

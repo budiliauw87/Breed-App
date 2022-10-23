@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 
-import com.liaudev.catbreedsapp.R;
 import com.liaudev.catbreedsapp.databinding.ActivitySplashBinding;
 import com.liaudev.catbreedsapp.ui.BaseActivity;
 import com.liaudev.catbreedsapp.ui.main.MainActivity;

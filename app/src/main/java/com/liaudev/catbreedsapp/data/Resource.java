@@ -1,6 +1,8 @@
 package com.liaudev.catbreedsapp.data;
 
-import static com.liaudev.catbreedsapp.data.Status.*;
+import static com.liaudev.catbreedsapp.data.Status.ERROR;
+import static com.liaudev.catbreedsapp.data.Status.LOADING;
+import static com.liaudev.catbreedsapp.data.Status.SUCCESS;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
