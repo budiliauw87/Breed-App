@@ -95,13 +95,16 @@ public class BreedPagingSource extends RxPagingSource<Integer, BreedItem> {
                             item.setEnergyLevel(responseObj.getInt("energy_level"));
                             item.setIntelligence(responseObj.getInt("intelligence"));
                             item.setHealthIssues(responseObj.getInt("health_issues"));
-                            item.setWikipediaUrl(responseObj.getString("wikipedia_url"));
+                            
                             if(responseObj.has("image")){
                                 JSONObject imageObj = responseObj.getJSONObject("image");
                                 item.setImage(imageObj.getString("url"));
                             }
                             if(responseObj.has("reference_image_id")){
                                 item.setReferenceImage(responseObj.getString("reference_image_id"));
+                            }
+                            if(responseObj.has("wikipedia_url")){
+                                item.setWikipediaUrl(responseObj.getString("wikipedia_url"));
                             }
                             breedItemList.add(item);
                         } catch (JSONException e) {

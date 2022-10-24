@@ -2,6 +2,7 @@ package com.liaudev.catbreedsapp.ui.detail;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import com.liaudev.catbreedsapp.databinding.ActivityDetailBinding;
 import com.liaudev.catbreedsapp.di.ViewModelFactory;
 import com.liaudev.catbreedsapp.ui.BaseActivity;
 import com.liaudev.catbreedsapp.ui.banner.DetailBannerAdapter;
+import com.liaudev.catbreedsapp.utils.Utils;
 import com.zhpan.bannerview.BannerViewPager;
 import com.zhpan.bannerview.constants.IndicatorGravity;
 import com.zhpan.indicator.enums.IndicatorSlideMode;
@@ -70,7 +72,8 @@ public class DetailActivity extends BaseActivity {
             if(breedItem.getHealthIssues()!=0){
                 binding.content.ratingHealth.setRating(breedItem.getHealthIssues());
             }
-
+            int colorToolbar = Utils.isNightMode(this)?ContextCompat.getColor(this,R.color.black):ContextCompat.getColor(this,R.color.purple_500);
+            binding.collapseToolbar.setContentScrim(new ColorDrawable(colorToolbar));
             if (breedItem.getTemperament() != null && !breedItem.getTemperament().isEmpty()) {
                 String[] arrTemprament = breedItem.getTemperament().split(",");
                 ShapeAppearanceModel shapeAppearanceModel = new ShapeAppearanceModel();
@@ -96,6 +99,10 @@ public class DetailActivity extends BaseActivity {
                     isExpand = true;
                 }
             });
+
+            if(breedItem.getWikipediaUrl()!=null && !breedItem.getWikipediaUrl().isEmpty()){
+                binding.content.btnWiki.setVisibility(View.VISIBLE);
+            }
 
             //open url wiki
             binding.content.btnWiki.setOnClickListener((v)->{
