@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
         setImageTheme();
         binding.swipeRefresh.setRefreshing(true);
         binding.btnRefresh.setOnClickListener((v)->{
-            adapterBreed.submitData(getLifecycle(), PagingData.empty());
+            binding.swipeRefresh.setRefreshing(true);
             hideAllLayout();
             adapterBreed.refresh();
         });
@@ -80,7 +80,6 @@ public class MainActivity extends BaseActivity {
             } else if (combinedLoadStates.getRefresh() instanceof LoadState.Error) {
                 showErrorLayout();
             }
-
             return null;
         });
 
