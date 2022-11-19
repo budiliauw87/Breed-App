@@ -155,6 +155,9 @@ public class DetailActivity extends BaseActivity {
                         break;
                 }
             });
+            createRotateAnimator(binding.content.toggleExpandTitle, 0f, 180f).start();
+            binding.content.layoutDetail.setVisibility(View.VISIBLE);
+            isExpand = true;
         }
     }
 
